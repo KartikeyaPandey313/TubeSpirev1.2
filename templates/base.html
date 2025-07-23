@@ -20,9 +20,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>
-    {% block title %}TubeSpire{% endblock %} - The Ultimate YouTube Downloader
-  </title>
+  <title>{% block title %}TubeSpire{% endblock %}</title>
   <meta name="description"
     content="Download YouTube videos and audio in the highest quality available (8K, 4K, FHD). Fast, free, and secure YouTube to MP4 and MP3 converter." />
   <meta name="keywords"
@@ -32,7 +30,7 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ request.url_root }}" />
-  <meta property="og:title" content="{% block og_title %}TubeSpire - The Ultimate YouTube Downloader{% endblock %}" />
+  <meta property="og:title" content="{% block og_title %}TubeSpire{% endblock %}" />
   <meta property="og:description" content="Download YouTube videos and audio in the highest quality available." />
   <meta property="og:image" content="{{ url_for('static', filename='og-image.png') }}" />
   <meta property="twitter:card" content="summary_large_image" />
