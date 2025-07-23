@@ -1,5 +1,5 @@
 # ==============================================================================
-# /.github/workflows/lighthouse.yml 
+# /.github/workflows/lighthouse.yml
 #
 # This GitHub Actions workflow automates website quality assurance by running
 # a Lighthouse CI audit on every push to the 'main' branch. Lighthouse tests
@@ -13,7 +13,7 @@ name: Lighthouse CI Audit
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -45,7 +45,6 @@ jobs:
 
       - name: Start Flask server
         run: |
-          # This command explicitly binds Gunicorn to the correct address and port for testing.
           gunicorn --bind 127.0.0.1:8000 -w 1 app:app &
           sleep 5
 
@@ -65,7 +64,9 @@ jobs:
 
       - name: Stop Flask server
         if: always()
-        run: pkill gunicorn
+        run: |
+          # The '|| true' ensures this step will always succeed, even if no gunicorn process is found.
+          pkill gunicorn || true
 
       - name: Upload Lighthouse report artifact
         if: always()
