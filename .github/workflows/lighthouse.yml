@@ -13,7 +13,7 @@ name: Lighthouse CI Audit
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
