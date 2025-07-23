@@ -1,0 +1,233 @@
+{# This template extends the base.html layout, inheriting its structure. #}
+{% extends "base.html" %}
+
+{# The main content block that will be injected into base.html #}
+{% block content %}
+
+<!-- ================================================================== -->
+<!-- HERO SECTION -->
+<!-- This is the main landing area with the title and URL input form. -->
+<!-- ================================================================== -->
+<header class="hero">
+  <div class="container">
+    <h1 class="hero-title">Your Content, Your Terms.</h1>
+    <p class="hero-subtitle">
+      Seamlessly download YouTube videos and audio in the highest quality
+      available—from HD to 4K. Fast, free, and designed for you.
+    </p>
+    <!-- This form submits the URL to the 'index' route for processing. -->
+    <form method="POST" action="{{ url_for('index') }}" class="url-form">
+      <i class="fa-solid fa-link"></i>
+      <input type="text" name="url" placeholder="Paste your YouTube link here..." required
+        aria-label="YouTube URL Input" />
+      <button type="submit" class="btn btn-primary">
+        <span>Fetch Video</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </form>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Flash Messages: Display any error messages from the backend. -->
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="flash-messages">
+    {% for message in messages %}
+    <p class="flash-error" role="alert">{{ message }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  <!-- ================================================================== -->
+  <!-- RESULTS SECTION -->
+  <!-- This entire section is only rendered if the backend successfully -->
+  <!-- fetches video information. -->
+  <!-- ================================================================== -->
+  {% if video_info %}
+  <section id="results" class="results-section">
+    <div class="video-card">
+
+      <!-- Video Preview: A flex container for the new 40/60 layout. -->
+      <div class="video-preview">
+
+        <!-- Left Side (40%): The enlarged video thumbnail. -->
+        <div class="thumbnail-container">
+          <img src="{{ video_info.thumbnail }}" alt="Thumbnail for {{ video_info.title }}" class="thumbnail"
+            loading="lazy" />
+        </div>
+
+        <!-- Right Side (60%): The video's textual information. -->
+        <div class="details-container">
+          <h2 class="video-title">{{ video_info.title }}</h2>
+          <div class="meta">
+            <span class="channel-name">
+              <i class="fa-solid fa-user"></i> {{ video_info.uploader }}
+            </span>
+            <span class="video-duration">
+              <i class="fa-solid fa-clock"></i> {{ formatted_duration }}
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Download Interface: Contains the tabs and download buttons. -->
+      <div class="download-tabs">
+        <!-- This single form handles all download requests. -->
+        <form id="download-form" method="POST" action="{{ url_for('download') }}">
+
+          <!-- Hidden inputs that will be populated by JavaScript. -->
+          <input type="hidden" name="video_url" value="{{ video_info.webpage_url }}" />
+          <input type="hidden" id="download_type" name="type" value="" />
+          <input type="hidden" id="download_selection" name="selection" value="" />
+
+          <!-- Tab buttons for switching between Video and Audio options. -->
+          <div class="tab-buttons" role="tablist">
+            <button type="button" class="tab-btn active" onclick="openTab(event, 'video-downloads')" role="tab">
+              <i class="fa-solid fa-video"></i> Video
+            </button>
+            <button type="button" class="tab-btn" onclick="openTab(event, 'audio-downloads')" role="tab">
+              <i class="fa-solid fa-music"></i> Audio
+            </button>
+          </div>
+
+          <!-- Video Tab Panel: This section is visible by default. -->
+          <div id="video-downloads" class="tab-content active" role="tabpanel">
+            {% for format in video_formats %}
+            <button type="button" class="format-btn download-trigger-btn" data-type="video"
+              data-selection="{{ format.format_id }}_{{ format.height }}">
+              <div class="format-label">
+                <i class="fa-solid fa-film"></i>
+                <div>
+                  <strong>{{ format.resolution }}</strong>
+                  <span class="format-note">{{ format.note }}</span>
+                </div>
+              </div>
+              <div class="format-action">
+                <i class="fa-solid fa-download"></i>
+              </div>
+            </button>
+            {% else %}
+            <p>No compatible MP4 video formats were found.</p>
+            {% endfor %}
+          </div>
+
+          <!-- Audio Tab Panel: This section is hidden by default. -->
+          <div id="audio-downloads" class="tab-content" role="tabpanel">
+            {% for format in audio_formats %}
+            <button type="button" class="format-btn download-trigger-btn" data-type="audio"
+              data-selection="{{ format.bitrate }}">
+              <div class="format-label">
+                <i class="fa-solid fa-headphones"></i>
+                <div>
+                  <strong>{{ format.quality }}</strong>
+                  <span class="format-note">MP3</span>
+                </div>
+              </div>
+              <div class="format-action">
+                <i class="fa-solid fa-download"></i>
+              </div>
+            </button>
+            {% else %}
+            <p>Audio conversion is currently unavailable.</p>
+            {% endfor %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ================================================================== -->
+  <!-- WHY USE TUBESPIRE SECTION --> -->
+  <!-- A grid-based layout to showcase the key features of the application. --> -->
+  <!-- ================================================================== -->
+  <section class="content-section">
+    <h2 class="section-title">Why Use TubeSpire?</h2>
+    <div class="features-grid">
+      <!-- Feature 1: Speed -->
+      <div class="feature-card">
+        <i class="fa-solid fa-bolt-lightning"></i>
+        <h3>High-Speed Downloads</h3>
+        <p>Our optimized backend processes your request instantly, delivering files at maximum speed.</p>
+      </div>
+      <!-- Feature 2: Quality -->
+      <div class="feature-card">
+        <i class="fa-solid fa-gem"></i>
+        <h3>Unmatched Quality</h3>
+        <p>Download videos in up to 8K resolution. We merge the best video and audio streams for you.</p>
+      </div>
+      <!-- Feature 3: Security -->
+      <div class="feature-card">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h3>Secure & Anonymous</h3>
+        <p>No registration, no tracking. Your privacy is our top priority on every single download.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- HOW IT WORKS SECTION -->
+  <!-- A clear, step-by-step guide for new users. -->
+  <!-- ================================================================== -->
+  <section class="content-section">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps-grid">
+      <!-- Step 1: Paste URL -->
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Paste URL</h3>
+        <p>Find your desired video on YouTube and copy its URL from the address bar.</p>
+      </div>
+      <!-- Step 2: Fetch & Choose -->
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Fetch & Choose</h3>
+        <p>Paste the link into the input field above and click "Fetch". Choose your preferred format.</p>
+      </div>
+      <!-- Step 3: Download -->
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Download</h3>
+        <p>Click the download button. Your file will be processed and saved to your device in seconds.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+{% endblock %}
+
+{# This block injects page-specific JavaScript into base.html #}
+{% block scripts %}
+<script>
+  // --- Tab Switching Logic ---
+  // This function handles the visual switching of the tabs.
+  function openTab(evt, tabName) {
+    // Hide all tab content panels.
+    const tabcontent = document.querySelectorAll(".tab-content");
+    tabcontent.forEach((tab) => (tab.style.display = "none"));
+
+    // Deactivate all tab buttons.
+    const tablinks = document.querySelectorAll(".tab-btn");
+    tablinks.forEach((link) => {
+      link.classList.remove("active");
+    });
+
+    // Show the target tab content and activate the clicked button.
+    const activeTab = document.getElementById(tabName);
+    activeTab.style.display = "grid"; // Use grid to match the new CSS layout.
+    evt.currentTarget.classList.add("active");
+  }
+
+  // Ensure the default tab (video) is displayed correctly on page load.
+  document.addEventListener("DOMContentLoaded", () => {
+    const videoTab = document.getElementById("video-downloads");
+    if (videoTab) {
+      videoTab.style.display = "grid";
+    }
+  });
+</script>
+{% endblock %}

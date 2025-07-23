@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+==============================================================================
+ /sitemap.xml
+
+ This file lists the important pages on your website in an XML format that
+ search engines can easily understand. It helps them discover all your content,
+ understand your site structure, and know how often pages are updated.
+==============================================================================
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- URL Entry for the Homepage -->
+  <url>
+    <!-- <loc>: The full, absolute URL of the page. This is a required tag. -->
+    <loc>https://www.tubespire.onrender.com/</loc>
+    
+    <!-- <lastmod>: The date the file was last modified (YYYY-MM-DD). Optional. -->
+    <lastmod>2025-07-22</lastmod>
+    
+    <!-- <changefreq>: A hint to crawlers about how frequently the page is likely to change.
+         Valid values: always, hourly, daily, weekly, monthly, yearly, never. Optional. -->
+    <changefreq>monthly</changefreq>
+    
+    <!-- <priority>: The priority of this URL relative to other URLs on your site (0.0 to 1.0).
+         A higher value suggests it's more important. The homepage is typically 1.0. Optional. -->
+    <priority>1.0</priority>
+  </url>
+
+  <!-- URL Entry for the About Page -->
+  <url>
+    <loc>https://www.tubespire.onrender.com/about</loc>
+    <lastmod>2025-07-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- URL Entry for the Terms of Service Page -->
+  <url>
+    <loc>https://www.tubespire.onrender.com/terms</loc>
+    <lastmod>2025-07-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- URL Entry for the Privacy Policy Page -->
+  <url>
+    <loc>https://www.tubespire.onrender.com/privacy</loc>
+    <lastmod>2025-07-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

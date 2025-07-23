@@ -1,0 +1,23 @@
+# ==============================================================================
+# Python Dependencies for TubeSpire
+#
+# This file lists the essential Python packages required to run the application.
+# Install these packages using the command: pip install -r requirements.txt
+# ==============================================================================
+
+# Flask: The core web framework used to build the application's backend,
+# handle routing, and manage requests and responses.
+Flask>=2.0
+
+# yt-dlp: The powerful and actively maintained library that serves as the
+# engine for downloading video and audio content from YouTube.
+yt-dlp>=2023.07.06
+
+# Gunicorn: A production-grade WSGI HTTP server for UNIX. It is the
+# recommended server for deploying Flask applications in a production environment.
+gunicorn>=20.1.0
+
+# python-dotenv: A utility to load environment variables from a .env file.
+# This is used for managing secret keys and other configuration during
+# local development without hardcoding them.
+python-dotenv>=1.0.0

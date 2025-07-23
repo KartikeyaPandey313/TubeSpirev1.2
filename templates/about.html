@@ -1,0 +1,46 @@
+{# This template extends the base.html layout, inheriting its structure. #}
+{% extends "base.html" %}
+
+{# Sets the title for this specific page. #}
+{% block title %}About Us - TubeSpire{% endblock %}
+
+{# The main content block that will be injected into base.html. #}
+{% block content %}
+<main class="container content-page">
+
+  <header class="content-header">
+    <h1>Our Mission</h1>
+    <p>Empowering users with control over online media.</p>
+  </header>
+
+  <div class="content-body">
+    <h2>Who We Are</h2>
+    <p>
+      TubeSpire was born from a simple idea: access to online video content
+      should be easy, secure, and available to everyone, regardless of their
+      internet connection. We are a team of developers and designers passionate
+      about creating powerful tools that are clean, intuitive, and respectful
+      of user privacy.
+    </p>
+
+    <h2>Our Technology</h2>
+    <p>
+      Our service is built on the shoulders of giants. We utilize the powerful
+      and constantly updated <code>yt-dlp</code> library, which is the gold
+      standard for online media downloading. This allows us to interface with a
+      vast array of video platforms and formats, ensuring we can always fetch
+      the highest quality streams available. Our backend, powered by Flask, is
+      designed to be lightweight and efficient, processing your requests with
+      speed and reliability.
+    </p>
+
+    <h2>Commitment to Privacy & Security</h2>
+    <p>
+      We believe that your activity is your own. TubeSpire does not require
+      user accounts, and we do not store your download history or IP addresses.
+      Every request is processed ephemerally. For a full breakdown, please see
+      our <a href="{{ url_for('privacy') }}">Privacy Policy</a>.
+    </p>
+  </div>
+</main>
+{% endblock %}

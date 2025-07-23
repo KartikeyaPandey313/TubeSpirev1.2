@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        "gtm.start": new Date().getTime(),
+        event: "gtm.js",
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", "GTM-PQCLP8VP");
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>
+    {% block title %}TubeSpire{% endblock %} - The Ultimate YouTube Downloader
+  </title>
+  <meta name="description"
+    content="Download YouTube videos and audio in the highest quality available (8K, 4K, FHD). Fast, free, and secure YouTube to MP4 and MP3 converter." />
+  <meta name="keywords"
+    content="youtube downloader, download youtube, 4k video downloader, youtube to mp4, youtube to mp3" />
+  <meta name="author" content="TubeSpire" />
+  <link rel="canonical" href="{{ request.url_root }}" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ request.url_root }}" />
+  <meta property="og:title" content="{% block og_title %}TubeSpire - The Ultimate YouTube Downloader{% endblock %}" />
+  <meta property="og:description" content="Download YouTube videos and audio in the highest quality available." />
+  <meta property="og:image" content="{{ url_for('static', filename='og-image.png') }}" />
+  <meta property="twitter:card" content="summary_large_image" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='icons/apple-touch-icon.png') }}" />
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='icons/favicon-32x32.png') }}" />
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='icons/favicon-16x16.png') }}" />
+  <link rel="manifest" href="{{ url_for('static', filename='icons/site.webmanifest') }}" />
+  <link rel="mask-icon" href="{{ url_for('static', filename='icons/safari-pinned-tab.svg') }}" color="#2575fc" />
+  <link rel="shortcut icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" />
+  <meta name="msapplication-TileColor" content="#121212" />
+  <meta name="msapplication-config" content="{{ url_for('static', filename='icons/browserconfig.xml') }}" />
+  <meta name="theme-color" content="#121212" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+
+<body>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQCLP8VP" height="0" width="0"
+      style="display: none; visibility: hidden"></iframe></noscript>
+  <div class="page-wrapper">
+    {% include 'navbar.html' %} {% block content %}{% endblock %}
+  </div>
+
+  {% include 'footer.html' %}
+
+  <div id="download-modal" class="download-modal">
+    <div class="modal-content">
+      <div class="loader"><span></span></div>
+      <h3>Processing Your Download</h3>
+      <p>
+        High-quality files may take a moment to prepare. Your download will
+        start automatically.
+      </p>
+    </div>
+  </div>
+
+  {% block scripts %}{% endblock %}
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const downloadButtons = document.querySelectorAll(
+        ".download-trigger-btn"
+      );
+      const modal = document.getElementById("download-modal");
+      const downloadForm = document.getElementById("download-form");
+      const typeInput = document.getElementById("download_type");
+      const selectionInput = document.getElementById("download_selection");
+      let isDownloading = false;
+
+      if (
+        downloadButtons.length > 0 &&
+        modal &&
+        downloadForm &&
+        typeInput &&
+        selectionInput
+      ) {
+        downloadButtons.forEach((button) => {
+          button.addEventListener("click", function (event) {
+            if (isDownloading) return;
+            isDownloading = true;
+            downloadButtons.forEach((btn) =>
+              btn.classList.add("is-disabled")
+            );
+
+            typeInput.value = this.dataset.type;
+            selectionInput.value = this.dataset.selection;
+            modal.classList.add("visible");
+
+            let checks = 0;
+            const interval = setInterval(function () {
+              checks++;
+              if (
+                document.cookie
+                  .split(";")
+                  .some((item) => item.trim().startsWith("downloadComplete="))
+              ) {
+                modal.classList.remove("visible");
+                document.cookie =
+                  "downloadComplete=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                isDownloading = false;
+                downloadButtons.forEach((btn) =>
+                  btn.classList.remove("is-disabled")
+                );
+                clearInterval(interval);
+              }
+              if (checks > 240) {
+                modal.classList.remove("visible");
+                isDownloading = false;
+                downloadButtons.forEach((btn) =>
+                  btn.classList.remove("is-disabled")
+                );
+                clearInterval(interval);
+              }
+            }, 500);
+
+            setTimeout(() => {
+              downloadForm.submit();
+            }, 150);
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

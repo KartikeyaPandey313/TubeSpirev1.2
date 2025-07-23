@@ -1,0 +1,78 @@
+# 📂 TubeSpire: Professional Project Architecture
+
+> This document provides a definitive overview of the TubeSpire project structure. Each file and directory is meticulously organized with a clear purpose, ensuring the application is clean, maintainable, and scalable for a production-grade environment.
+
+---
+
+### 🏛️ Core Architecture
+
+The project follows a standard Flask application layout, separating logic, templates, and static assets for maximum clarity and separation of concerns.
+
+```
+tubespire/
+│
+├── .github/                        # Houses CI/CD and automation workflows.
+│   └── workflows/
+│       └── lighthouse.yml          # ▶️ CI Pipeline: Automates quality audits (performance, SEO) on every deploy.
+│
+├── .venv/                          # 📦 Virtual Environment: Local, isolated Python environment. (Ignored by Git).
+│
+├── app.py                          # 🧠 Application Core: The central Flask server that orchestrates all routing, logic, and security.
+├── requirements.txt                # 📋 Dependency Manifest: Lists all Python packages required to build and run the project.
+│
+├── static/                         # 🎨 Static Assets: All client-side files served directly to the browser.
+│   ├── style.css                   # ✨ Visual Identity: The primary stylesheet defining the site's professional aesthetic.
+│   ├── og-image.png                # 🖼️ Social Media Card: The preview image used when a link is shared on social platforms.
+│   └── icons/                      # 🌐 Favicons & Icons: A complete set for browser tabs, bookmarks, and mobile devices.
+│       ├── android-chrome-192x192.png  # Icon for Android devices.
+│       ├── android-chrome-512x512.png  # Larger, high-resolution icon for Android.
+│       ├── apple-touch-icon.png    # High-quality icon for iOS home screens.
+│       ├── favicon-16x16.png       # 16x16 pixel icon for browser tabs.
+│       ├── favicon-32x32.png       # 32x32 pixel icon for browser tabs.
+│       ├── favicon.ico             # Legacy icon for maximum browser compatibility.
+│       ├── favicon.svg             # Modern, scalable vector icon for sharp rendering.
+│       ├── Logo.png                # The original, high-resolution source logo image.
+│       └── site.webmanifest        # PWA manifest for defining app-like characteristics.
+│
+├── templates/                      # 🏗️ Frontend Templates: All server-rendered HTML files using the Jinja2 engine.
+│   ├── errors/                     # A collection of professional, user-friendly error pages.
+│   │   ├── 403.html                # Handles "Access Forbidden" errors.
+│   │   ├── 404.html                # Handles "Page Not Found" errors.
+│   │   └── 500.html                # Handles "Internal Server Error" errors.
+│   │
+│   ├── base.html                   # 🏛️ Master Layout: The foundational blueprint for all pages.
+│   ├── navbar.html                 # Reusable UI component for the site's navigation bar.
+│   ├── footer.html                 # Reusable UI component for the site's footer.
+│   │
+│   ├── index.html                  # Homepage template and the main application interface.
+│   ├── about.html                  # "About Us" page template.
+│   ├── terms.html                  # "Terms of Service" page template.
+│   └── privacy.html                # "Privacy Policy" page template.
+│
+├── guide/                          # 📚 Documentation: Project guides for developers and end-users.
+│   ├── ADMIN_GUIDE.md              # In-depth technical guide to the codebase and architecture.
+│   └── HOW_TO_USE.md               # Simple, visual guide for end-users.
+│
+├── extras/                         # 🧩 Supplementary Assets: Non-essential materials (e.g., design assets, notes).
+│
+├── downloads/                      # 🗑️ Ephemeral Storage: Temporary location for media files. (Ignored by Git).
+│
+├── .gitattributes                  # ⚙️ Git Config: Enforces consistent text formatting (e.g., line endings).
+├── .gitignore                      # 🚫 Git Ignore: Specifies files/folders to be excluded from version control.
+│
+├── CONTRIBUTING.md                 # 🤝 Contribution Guide: Guidelines for developers wishing to contribute.
+├── LICENSE                         # 📜 Usage License: Defines the legal terms under which the software can be used.
+├── README.md                       # 🚀 Project Readme: The front door to the repository, explaining the project.
+├── robots.txt                      # 🤖 SEO Rules: Instructs search engine crawlers on which pages to index or ignore.
+├── sitemap.xml                     # 🗺️ Site Map: Provides a structured map of the site for better search engine discovery.
+├── structure.md                    # 📂 Project Structure.
+
+```
+
+---
+### Key Architectural Principles
+
+* **Modularity:** By separating components like `navbar.html` and `footer.html`, the code follows the **DRY (Don't Repeat Yourself)** principle, making maintenance efficient.
+* **Separation of Concerns:** The structure cleanly divides the **backend logic** (`app.py`), **frontend presentation** (`templates/`), and **static assets** (`static/`), which is fundamental to building scalable web applications.
+* **Developer Experience:** Files like `.gitattributes`, `CONTRIBUTING.md`, and the `guide/` directory are included to ensure a smooth and consistent development process for all collaborators.
+* **Security:** The use of an `.env.example` file (instead of committing the actual `.env` file) prevents secret keys from being exposed in version control, a critical security best practice.

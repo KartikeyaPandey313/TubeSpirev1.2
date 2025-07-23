@@ -1,0 +1,58 @@
+{# This template extends the base.html layout, inheriting its structure. #}
+{% extends "base.html" %}
+
+{# Sets the title for this specific page. #}
+{% block title %}Privacy Policy - TubeSpire{% endblock %}
+
+{# The main content block that will be injected into base.html. #}
+{% block content %}
+<main class="container content-page">
+
+    <header class="content-header">
+        <h1>Privacy Policy</h1>
+        <p>Last Updated: July 22, 2025</p>
+    </header>
+
+    <div class="content-body">
+        <h2>Our Core Principle: Your Privacy First</h2>
+        <p>
+            TubeSpire is designed to be a private and anonymous service. We believe you should be able to use our tool
+            without worrying about your data being tracked or stored.
+        </p>
+
+        <h2>Information We Do Not Collect</h2>
+        <p>
+            We want to be crystal clear about what we <strong>do not</strong> do:
+        </p>
+        <ul>
+            <li><strong>No User Accounts:</strong> We do not require you to sign up or create an account.</li>
+            <li><strong>No IP Address Logging:</strong> We do not store your IP address in connection with your usage.
+            </li>
+            <li><strong>No Download History:</strong> The URLs you paste are processed in real-time and are never saved
+                to a database.</li>
+        </ul>
+
+        <h2>Information We Do Collect</h2>
+        <p>
+            To maintain the health and security of our service, we collect a minimal amount of non-personally
+            identifiable information:
+        </p>
+        <ul>
+            <li><strong>Aggregated Analytics:</strong> We use Google Analytics to collect anonymous traffic data, such
+                as which pages are visited most often and the general country of origin of our visitors. This helps us
+                understand how our service is used and where we can improve. This data is aggregated and cannot be tied
+                to an individual user.</li>
+            <li><strong>Error Logs:</strong> If our service encounters an error during a download request, our server
+                may log the type of error and the video URL that caused it. This is purely for debugging purposes to
+                help us fix bugs and is automatically deleted on a regular basis.</li>
+        </ul>
+
+        <h2>Cookies</h2>
+        <p>
+            We use a single, functional cookie (<code>downloadComplete</code>) to improve your user experience by hiding
+            the loading animation after your file has been sent. This cookie contains no personal information and
+            automatically expires.
+        </p>
+    </div>
+</main>
+{% endblock %}

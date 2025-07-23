@@ -1,0 +1,30 @@
+# ==============================================================================
+# /robots.txt
+#
+# This file provides instructions to web crawlers (like Googlebot) about
+# which pages or files the crawler can or cannot request from your site.
+# A well-configured robots.txt is essential for good SEO.
+# ==============================================================================
+
+# User-agent: *
+# The asterisk (*) is a wildcard that signifies this section applies to ALL
+# web crawlers (e.g., Google, Bing, DuckDuckGo, etc.).
+User-agent: *
+
+# Allow: /
+# This directive allows crawlers to access the root URL and, by extension,
+# all other pages on the site unless explicitly disallowed.
+Allow: /
+
+# Disallow: /download
+# This directive explicitly tells crawlers NOT to access or index the /download
+# URL. This is critical because this URL is a functional endpoint for processing
+# downloads and does not contain user-facing content. Indexing it would be pointless
+# and could lead to SEO issues.
+Disallow: /download
+
+# Sitemap: [your-website-url]/sitemap.xml
+# This line provides the absolute URL to your sitemap. It's a powerful hint
+# for search engines to help them discover all the important pages on your
+# site efficiently.
+Sitemap: https://www.tubespire.onrender.com/sitemap.xml
