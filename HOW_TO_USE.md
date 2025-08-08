@@ -10,17 +10,12 @@ Welcome to TubeSpire. This guide provides a step-by-step overview for downloadin
 
 1.  Navigate to the desired YouTube video in your web browser.
 2.  Copy the complete URL from the browser's address bar.
-3.  Return to the **TubeSpire** homepage and paste the copied URL into the designated input field.
-
-![Step 1: Paste URL](https://i.imgur.com/your-paste-image.png)
 
 ### **Step 2: Retrieve Video Information and Select Format**
 
 1.  Click the **"Fetch"** button to initiate processing.
 2.  After a brief moment, the application will display the video details and all available download formats.
 3.  Use the **Video** or **Audio** tabs to select your preferred media type.
-
-![Step 2: Choose Format](https://i.imgur.com/your-choose-image.png)
 
 ### **Step 3: Download the Selected File**
 
