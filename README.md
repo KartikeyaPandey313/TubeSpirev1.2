@@ -50,10 +50,10 @@
 
 ## � What TubeSpire Does & Does NOT Do
 
-| ✅ **Does** | ❌ **Does NOT** |
-|:---|:---|
-| Download YouTube videos & audio | Proxy, archive, or stream content |
-| Work in your browser (web app) | Support other sites (YouTube only) |
+| ✅ **Does**                     | ❌ **Does NOT**                            |
+| :------------------------------ | :----------------------------------------- |
+| Download YouTube videos & audio | Proxy, archive, or stream content          |
+| Work in your browser (web app)  | Support other sites (YouTube only)         |
 | Require no API keys or accounts | Require installation (unless self-hosting) |
 
 ---
@@ -74,11 +74,13 @@ For a step-by-step guide with screenshots, see [HOW_TO_USE.md](guide/HOW_TO_USE.
 > You do **not** need to install anything to use TubeSpire online. This is for those who want to run it locally for learning or development.
 
 **Requirements:**
+
 - Python 3.8+
 - [FFmpeg](https://ffmpeg.org/)
 - [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 
 **Setup:**
+
 ```bash
 git clone https://github.com/KartikeyaPandey313/TubeSpirev1.2/.git
 cd TubeSpire
@@ -86,6 +88,7 @@ pip install -r requirements.txt
 # Make sure ffmpeg and yt-dlp are installed and in your PATH
 python app.py
 ```
+
 Then open [http://localhost:5000](http://localhost:5000) in your browser.
 
 ---
@@ -132,15 +135,17 @@ No API keys or accounts are required.
 We welcome contributors of all ages and backgrounds — whether you’re 10 or 100, everyone is invited to help build TubeSpire! If you want to contribute, please read our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and our code of conduct.
 
 **For Correcting Us:**
+
 - Open an issue or pull request on GitHub
 - Check out the [CONTRIBUTING.md](CONTRIBUTING.md) for details
 - Communication is via [GitHub](https://github.com/KartikeyaPandey313/) or [Gmail](mailto:pandeykartikeya313@gmail.com) only
 
 **Our Developers:**
+
 <div align="center">
   <h3>Project Architect</h3>
   <a href="https://github.com/KartikeyaPandey313">
-    <img src="extras/profile_picture.png" width="120" alt="Kartikeya Pandey" style="border-radius:50%; border: 2px solid #30363D;"/>
+    <img src="static/profile_picture.png" width="120" alt="Kartikeya Pandey" style="border-radius:50%; border: 2px solid #30363D;"/>
     <br/>
     <sub><b>Kartikeya Pandey</b></sub>
   </a>

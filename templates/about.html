@@ -43,10 +43,10 @@ be injected into base.html. #} {% block content %}
       We are a team of developers and designers passionate about creating
       powerful tools that are clean, intuitive, and respectful of user privacy.
     </p>
-    <p style="display: flex; align-items: center; gap: 12px">
-      <img src="/extras/profile_picture.png" alt="Lead Developer Profile Picture" style="
-          width: 48px;
-          height: 48px;
+    <p style="display: flex; align-items: center; gap: 12px;">
+      <img src="{{ url_for('static', filename='profile_picture.png') }}" alt="Lead Developer Profile Picture" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid #ccc;" />
+      <span><strong>Lead Developer:</strong> <a href="https://github.com/KartikeyaPandey313">Kartikeya Pandey</a></span>
+    </p>
           border-radius: 50%;
           object-fit: cover;
           border: 2px solid #ccc;
