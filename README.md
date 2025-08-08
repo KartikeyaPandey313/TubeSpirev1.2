@@ -145,7 +145,7 @@ We welcome contributors of all ages and backgrounds — whether you’re 10 or 1
 <div align="center">
   <h3>Project Architect</h3>
   <a href="https://github.com/KartikeyaPandey313">
-    <img src="static/profile_picture.png" width="120" alt="Kartikeya Pandey" style="border-radius:50%; border: 2px solid #30363D;"/>
+    <img src="static/profile_picture.png" width="120" alt="Kartikeya Pandey" style="border-radius: 50%; border: 3px solid #373737ff; box-shadow: 0 2px 12px rgba(106,17,203,0.15); object-fit: cover; aspect-ratio: 1/1;"/>
     <br/>
     <sub><b>Kartikeya Pandey</b></sub>
   </a>
