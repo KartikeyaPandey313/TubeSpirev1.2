@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - TubeSpire Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Baloo+Bhai+2:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #10121a;
+            --bg-light: #1a1d2a;
+            --surface: #25293d;
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --text-light: #e0e0e0;
+            --text-dark: #a0a0a0;
+            --border-color: #333757;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --font-family-body: "Baloo Bhai 2", sans-serif;
+            --font-family-display: "Audiowide", sans-serif;
+            --radius: 12px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-body);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-light);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem 3rem;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-family: var(--font-family-display);
+            margin-bottom: 3rem;
+            color: var(--text-light);
+        }
+
+        .sidebar-header i {
+            color: var(--primary);
+        }
+
+        .nav-menu h4 {
+            color: var(--text-dark);
+            font-size: 0.8rem;
+            font-family: var(--font-family-display);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .nav-list a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-list a:hover,
+        .nav-list a.active {
+            background-color: var(--surface);
+            color: var(--text-light);
+        }
+
+        .nav-list a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .user-profile {
+            margin-top: auto;
+            background-color: var(--surface);
+            padding: 1rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-family: var(--font-family-display);
+        }
+
+        .page-header p {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .content-card {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-family: var(--font-family-display);
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            background-color: var(--surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>TubeSpire</span>
+        </div>
+        <nav class="nav-menu">
+            <h4>Main Menu</h4>
+            <ul class="nav-list">
+                <li><a href="{{ url_for('admin_dashboard', name=admin) }}"><i class="fa-solid fa-chart-pie"></i>
+                        Dashboard</a></li>
+                <li><a href="{{ url_for('admin_users', name=admin) }}"><i class="fa-solid fa-users"></i> Users</a></li>
+                <li><a href="{{ url_for('admin_downloads', name=admin) }}"><i class="fa-solid fa-download"></i>
+                        Downloads</a></li>
+                <li><a href="{{ url_for('admin_analytics', name=admin) }}"><i class="fa-solid fa-chart-line"></i>
+                        Analytics</a></li>
+            </ul>
+            <h4>Configuration</h4>
+            <ul class="nav-list">
+                <li><a href="{{ url_for('admin_settings', name=admin) }}" class="active"><i
+                            class="fa-solid fa-sliders"></i> Settings</a></li>
+                <li><a href="{{ url_for('admin_server', name=admin) }}"><i class="fa-solid fa-server"></i> Server</a>
+                </li>
+                <li><a href="{{ url_for('admin_support', name=admin) }}"><i class="fa-solid fa-life-ring"></i>
+                        Support</a></li>
+            </ul>
+        </nav>
+        <div class="user-profile">
+            <h5>Welcome, {{ admin }}</h5>
+            <p>You have full control.</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <h1>Site Settings</h1>
+            <p>Configure global settings for the TubeSpire service.</p>
+        </header>
+        <section class="content-card">
+            <div class="card-header">
+                <h3>General Settings</h3>
+            </div>
+            <form action="403.html">
+                <div class="form-group">
+                    <label for="site-name">Site Name</label>
+                    <input type="text" id="site-name" value="TubeSpire">
+                </div>
+                <div class="form-group">
+                    <label for="max-quality">Max Download Quality</label>
+                    <input type="text" id="max-quality" value="4K">
+                </div>
+                <div class="form-group">
+                    <label for="api-key">Public API Key (Disabled)</label>
+                    <input type="text" id="api-key" value="ts_api_************************" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>

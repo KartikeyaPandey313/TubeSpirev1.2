@@ -1,13 +1,8 @@
-{# This template extends the base.html layout, inheriting its structure. #}
-{% extends "base.html" %}
-
-{# Sets the title for this specific page. #}
-{% block title %}About Us - TubeSpire{% endblock %}
-
-{# The main content block that will be injected into base.html. #}
-{% block content %}
+{# This template extends the base.html layout, inheriting its structure. #} {%
+extends "base.html" %} {# Sets the title for this specific page. #} {% block
+title %}About Us - TubeSpire{% endblock %} {# The main content block that will
+be injected into base.html. #} {% block content %}
 <main class="container content-page">
-
   <header class="content-header">
     <h1>Our Mission</h1>
     <p>Empowering users with control over online media.</p>
@@ -16,11 +11,12 @@
   <div class="content-body">
     <h2>Who We Are</h2>
     <p>
-      TubeSpire was born from a simple idea: access to online video content
-      should be easy, secure, and available to everyone, regardless of their
-      internet connection. We are a team of developers and designers passionate
-      about creating powerful tools that are clean, intuitive, and respectful
-      of user privacy.
+      TubeSpire was born from a difficulty: not able to download high quality
+      videos from the internet without a convoluted process. We believe that
+      downloading should be easy, secure, and available to everyone, regardless
+      of their internet connection. We are a team of developers and designers
+      passionate about creating powerful tools that are clean, intuitive, and
+      respectful of user privacy.
     </p>
 
     <h2>Our Technology</h2>
@@ -36,10 +32,27 @@
 
     <h2>Commitment to Privacy & Security</h2>
     <p>
-      We believe that your activity is your own. TubeSpire does not require
-      user accounts, and we do not store your download history or IP addresses.
-      Every request is processed ephemerally. For a full breakdown, please see
-      our <a href="{{ url_for('privacy') }}">Privacy Policy</a>.
+      We believe that your activity is your own. TubeSpire does not require user
+      accounts, and we do not store your download history or IP addresses. Every
+      request is processed ephemerally. For a full breakdown, please see our
+      <a href="{{ url_for('privacy') }}">Privacy Policy</a>.
+    </p>
+
+    <h2>Our developers</h2>
+    <p>
+      We are a team of developers and designers passionate about creating
+      powerful tools that are clean, intuitive, and respectful of user privacy.
+    </p>
+    <p style="display: flex; align-items: center; gap: 12px">
+      <img src="/extras/profile_picture.png" alt="Lead Developer Profile Picture" style="
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #ccc;
+        " />
+      <span><strong>Lead Developer:</strong>
+        <a href="https://github.com/KartikeyaPandey313">Kartikeya Pandey</a></span>
     </p>
   </div>
 </main>

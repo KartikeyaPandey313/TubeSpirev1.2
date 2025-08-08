@@ -315,9 +315,83 @@ def about():
     """Renders the About Us page."""
     return render_template("about.html")
 
+# ==============================================================================
+# 5. ADMIN PANEL (FAKE ROUTES)
+# ==============================================================================
+
+# This helper function will render the endless animation pages.
+def render_action_page(title, message):
+    """Renders the fake action/loading page with a custom title and message."""
+    admin_name = request.args.get('name', 'Admin')
+    return render_template("admin/action_handler.html", admin=admin_name, page_title=title, action_message=message)
+
+@app.route("/admin/")
+def admin_dashboard():
+    """Renders the main fake admin dashboard."""
+    admin_name = request.args.get('name', 'Admin')
+    return render_template("admin/admin.html", admin=admin_name)
+
+@app.route("/admin/users")
+def admin_users():
+    """Renders the fake user management page."""
+    admin_name = request.args.get('name', 'Admin')
+    return render_template("admin/users.html", admin=admin_name)
+
+@app.route("/admin/downloads")
+def admin_downloads():
+    """Renders the fake downloads log page."""
+    admin_name = request.args.get('name', 'Admin')
+    return render_template("admin/downloads.html", admin=admin_name)
+
+@app.route("/admin/analytics")
+def admin_analytics():
+    """Renders the fake analytics page."""
+    admin_name = request.args.get('name', 'Admin')
+    return render_template("admin/analytics.html", admin=admin_name)
+
+@app.route("/admin/settings")
+def admin_settings():
+    """Renders the fake settings page."""
+    admin_name = request.args.get('name', 'Admin')
+    return render_template("admin/settings.html", admin=admin_name)
+
+@app.route("/admin/server")
+def admin_server():
+    """Renders the fake server status page."""
+    admin_name = request.args.get('name', 'Admin')
+    return render_template("admin/server.html", admin=admin_name)
+
+@app.route("/admin/support")
+def admin_support():
+    """Renders the fake support tickets page."""
+    admin_name = request.args.get('name', 'Admin')
+    return render_template("admin/support.html", admin=admin_name)
+
+@app.route("/admin/add-new-user")
+def admin_add_new_user():
+    """Renders the fake 'add new user' form."""
+    admin_name = request.args.get('name', 'Admin')
+    return render_template("admin/add_new_user.html", admin=admin_name)
+
+# --- Routes for the endless animation pages ---
+@app.route("/admin/execute")
+def admin_execute():
+    return render_action_page("Executing Task", "Clearing system cache...")
+
+@app.route("/admin/restart")
+def admin_restart():
+    return render_action_page("Restarting Server", "Initiating web server restart protocol...")
+
+@app.route("/admin/enable")
+def admin_enable():
+    return render_action_page("Enabling Mode", "Activating sitewide maintenance mode...")
+
+@app.route("/admin/scan")
+def admin_scan():
+    return render_action_page("Scanning System", "Running full security and vulnerability scan...")
 
 # ==============================================================================
-# 5. ERROR HANDLERS
+# 6. ERROR HANDLERS
 # ==============================================================================
 
 @app.errorhandler(403)
@@ -337,7 +411,7 @@ def internal_server_error(error):
 
 
 # ==============================================================================
-# 6. APPLICATION LAUNCH
+# 7. APPLICATION LAUNCH
 # ==============================================================================
 
 if __name__ == "__main__":

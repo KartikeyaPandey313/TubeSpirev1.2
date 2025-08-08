@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TubeSpire - Admin Control Panel</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Baloo+Bhai+2:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-dark: #10121a;
+            --bg-light: #1a1d2a;
+            --surface: #25293d;
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --text-light: #e0e0e0;
+            --text-dark: #a0a0a0;
+            --border-color: #333757;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --font-family-body: "Baloo Bhai 2", sans-serif;
+            --font-family-display: "Audiowide", sans-serif;
+            --radius: 12px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-body);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-light);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem 3rem;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-family: var(--font-family-display);
+            margin-bottom: 3rem;
+            color: var(--text-light);
+        }
+
+        .sidebar-header i {
+            color: var(--primary);
+        }
+
+        .nav-menu h4 {
+            color: var(--text-dark);
+            font-size: 0.8rem;
+            font-family: var(--font-family-display);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .nav-list a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-list a:hover,
+        .nav-list a.active {
+            background-color: var(--surface);
+            color: var(--text-light);
+        }
+
+        .nav-list a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .user-profile {
+            margin-top: auto;
+            background-color: var(--surface);
+            padding: 1rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .user-profile h5 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-profile p {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-family: var(--font-family-display);
+        }
+
+        .page-header p {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background-color: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card .icon {
+            font-size: 2rem;
+            padding: 1rem;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .stat-card .icon.users {
+            background-color: rgba(37, 117, 252, 0.2);
+            color: var(--secondary);
+        }
+
+        .stat-card .icon.downloads {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: var(--success);
+        }
+
+        .stat-card .icon.load {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: var(--warning);
+        }
+
+        .stat-card .icon.revenue {
+            background-color: rgba(106, 17, 203, 0.2);
+            color: var(--primary);
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            transition: color 0.5s ease;
+        }
+
+        .stat-card .label {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .content-card {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-family: var(--font-family-display);
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: black;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .user-table th,
+        .user-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-table th {
+            color: var(--text-dark);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .user-table tbody tr:hover {
+            background-color: var(--surface);
+        }
+
+        .user-table .status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .user-table .status.active {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: var(--success);
+        }
+
+        .user-table .status.banned {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: var(--danger);
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .control-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--surface);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .highlight-update {
+            color: var(--success);
+        }
+
+        /* Class for highlighting updated stats */
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>TubeSpire</span>
+        </div>
+        <nav class="nav-menu">
+            <h4>Main Menu</h4>
+            <ul class="nav-list">
+                <li><a href="{{ url_for('admin_dashboard', name=admin) }}" class="active"><i
+                            class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('admin_users', name=admin) }}"><i class="fa-solid fa-users"></i> Users</a></li>
+                <li><a href="{{ url_for('admin_downloads', name=admin) }}"><i class="fa-solid fa-download"></i>
+                        Downloads</a></li>
+                <li><a href="{{ url_for('admin_analytics', name=admin) }}"><i class="fa-solid fa-chart-line"></i>
+                        Analytics</a></li>
+            </ul>
+            <h4>Configuration</h4>
+            <ul class="nav-list">
+                <li><a href="{{ url_for('admin_settings', name=admin) }}"><i class="fa-solid fa-sliders"></i>
+                        Settings</a></li>
+                <li><a href="{{ url_for('admin_server', name=admin) }}"><i class="fa-solid fa-server"></i> Server</a>
+                </li>
+                <li><a href="{{ url_for('admin_support', name=admin) }}"><i class="fa-solid fa-life-ring"></i>
+                        Support</a></li>
+            </ul>
+        </nav>
+        <div class="user-profile">
+            <h5>Welcome, {{ admin }}</h5>
+            <p>You have full control.</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="page-header">
+            <h1>Admin Dashboard</h1>
+            <p>Welcome back, you have full administrative control over the TubeSpire service.</p>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="icon users"><i class="fa-solid fa-users"></i></div>
+                <div>
+                    <div class="value" id="total-users">261</div>
+                    <div class="label">Total Users</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon downloads"><i class="fa-solid fa-circle-down"></i></div>
+                <div>
+                    <div class="value" id="downloads-today">321</div>
+                    <div class="label">Downloads Today</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon load"><i class="fa-solid fa-microchip"></i></div>
+                <div>
+                    <div class="value" id="server-load">8%</div>
+                    <div class="label">Server Load</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon revenue"><i class="fa-solid fa-dollar-sign"></i></div>
+                <div>
+                    <div class="value" id="monthly-revenue">$7,269</div>
+                    <div class="label">Monthly Revenue</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <div class="card-header">
+                <h3>Recent User Activity</h3>
+                <a href="{{ url_for('admin_add_new_user', name=admin) }}" class="btn btn-primary"><i
+                        class="fa-solid fa-user-plus"></i> Add New User</a>
+            </div>
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Last Action</th>
+                        <th>Timestamp</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>user_alpha_7</td>
+                        <td>Downloaded Video (2160p)</td>
+                        <td>Some moments ago</td>
+                        <td><span class="status active">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>user_beta_3</td>
+                        <td>Downloaded Audio (320kbps)</td>
+                        <td>5 min ago</td>
+                        <td><span class="status active">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>user_gamma_9</td>
+                        <td>Failed Download (Age Restricted)</td>
+                        <td>12 min ago</td>
+                        <td><span class="status active">Active</span></td>
+                    </tr>
+                    <tr>
+                        <td>user_delta_1</td>
+                        <td>Session Start</td>
+                        <td>28 min ago</td>
+                        <td><span class="status banned">Banned</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="content-card">
+            <div class="card-header">
+                <h3>System Controls</h3>
+            </div>
+            <div class="control-grid">
+                <div class="control-item">
+                    <span>Clear System Cache</span>
+                    <a href="{{ url_for('admin_execute', name=admin) }}" class="btn btn-warning">Execute</a>
+                </div>
+                <div class="control-item">
+                    <span>Restart Web Server</span>
+                    <a href="{{ url_for('admin_restart', name=admin) }}" class="btn btn-danger">Restart</a>
+                </div>
+                <div class="control-item">
+                    <span>Enable Maintenance Mode</span>
+                    <a href="{{ url_for('admin_enable', name=admin) }}" class="btn btn-primary">Enable</a>
+                </div>
+                <div class="control-item">
+                    <span>Run Security Scan</span>
+                    <a href="{{ url_for('admin_scan', name=admin) }}" class="btn btn-primary">Scan Now</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const totalUsers = document.getElementById('total-users');
+            const downloadsToday = document.getElementById('downloads-today');
+            const serverLoad = document.getElementById('server-load');
+            const monthlyRevenue = document.getElementById('monthly-revenue');
+
+            // Helper function to update a stat value and highlight it
+            function updateStat(element, newValue) {
+                element.textContent = newValue;
+                element.classList.add('highlight-update');
+                setTimeout(() => {
+                    element.classList.remove('highlight-update');
+                }, 1000); // Highlight lasts for 1 second
+            }
+
+            // Function to simulate live updates
+            function simulateLiveUpdates() {
+                // Update downloads frequently
+                setInterval(() => {
+                    let currentDownloads = parseInt(downloadsToday.textContent.replace(/,/g, ''));
+                    currentDownloads += Math.floor(Math.random() * 3) + 1;
+                    updateStat(downloadsToday, currentDownloads.toLocaleString());
+                }, 3000); // Every 3 seconds
+
+                // Update users occasionally
+                setInterval(() => {
+                    let currentUsers = parseInt(totalUsers.textContent.replace(/,/g, ''));
+                    currentUsers += Math.random() > 0.5 ? 1 : -1;
+                    updateStat(totalUsers, currentUsers.toLocaleString());
+                }, 7000); // Every 7 seconds
+
+                // Update server load smoothly
+                setInterval(() => {
+                    let currentLoad = parseInt(serverLoad.textContent);
+                    let change = (Math.random() * 4) - 2; // Fluctuate between -2 and +2
+                    let newLoad = Math.min(Math.max(currentLoad + change, 5), 95); // Keep between 5% and 95%
+                    updateStat(serverLoad, `${Math.round(newLoad)}%`);
+                }, 5000); // Every 5 seconds
+
+                // Update revenue very rarely
+                setInterval(() => {
+                    let currentRevenue = parseInt(monthlyRevenue.textContent.replace(/[$,]/g, ''));
+                    currentRevenue += Math.floor(Math.random() * 50) + 20;
+                    updateStat(monthlyRevenue, `$${currentRevenue.toLocaleString()}`);
+                }, 60000); // Every 60 seconds
+            }
+
+            simulateLiveUpdates();
+        });
+    </script>
+</body>
+
+</html>

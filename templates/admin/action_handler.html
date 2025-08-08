@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The title will be set dynamically by the Flask route -->
+    <title>{{ page_title }} - TubeSpire Admin</title>
+
+    <!-- External assets for fonts and icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Baloo+Bhai+2:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- All styles are self-contained in this file for portability -->
+    <style>
+        :root {
+            --bg-dark: #10121a;
+            --bg-light: #1a1d2a;
+            --surface: #25293d;
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --text-light: #e0e0e0;
+            --text-dark: #a0a0a0;
+            --border-color: #333757;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --font-family-body: "Baloo Bhai 2", sans-serif;
+            --font-family-display: "Audiowide", sans-serif;
+            --font-family-mono: "Courier New", Courier, monospace;
+            --radius: 12px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-body);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-light);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem 3rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-family: var(--font-family-display);
+            margin-bottom: 3rem;
+            color: var(--text-light);
+        }
+
+        .sidebar-header i {
+            color: var(--primary);
+        }
+
+        .nav-menu h4 {
+            color: var(--text-dark);
+            font-size: 0.8rem;
+            font-family: var(--font-family-display);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .nav-list a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-list a:hover {
+            background-color: var(--surface);
+            color: var(--text-light);
+        }
+
+        .nav-list a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .user-profile {
+            margin-top: auto;
+            background-color: var(--surface);
+            padding: 1rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-family: var(--font-family-display);
+        }
+
+        .page-header p {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        /* Styles for the fake console */
+        .console-container {
+            background-color: #000;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .console-output {
+            font-family: var(--font-family-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .console-output p {
+            margin-bottom: 0.25rem;
+            word-break: break-all;
+        }
+
+        .console-output .success {
+            color: var(--success);
+        }
+
+        .console-output .warning {
+            color: var(--warning);
+        }
+
+        .console-output .danger {
+            color: var(--danger);
+        }
+
+        .console-output .info {
+            color: var(--secondary);
+        }
+
+        .console-output .prompt {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Styles for the fake input forms inside the console */
+        .console-form {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .console-form input {
+            background-color: var(--surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 0.5rem;
+            font-family: var(--font-family-mono);
+            flex-grow: 1;
+        }
+
+        .console-form button,
+        .console-button {
+            background-color: var(--success);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: var(--font-family-mono);
+        }
+
+        .console-button {
+            margin-top: 0.5rem;
+            background-color: var(--warning);
+            color: black;
+        }
+
+        .console-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: var(--text-light);
+            width: 10px;
+            height: 1.2em;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar: Consistent across all admin pages for a realistic feel. -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>TubeSpire</span>
+        </div>
+        <nav class="nav-menu">
+            <h4>Main Menu</h4>
+            <ul class="nav-list">
+                <li><a href="{{ url_for('admin_dashboard', name=admin) }}"><i class="fa-solid fa-chart-pie"></i>
+                        Dashboard</a></li>
+                <li><a href="{{ url_for('admin_users', name=admin) }}"><i class="fa-solid fa-users"></i> Users</a></li>
+                <li><a href="{{ url_for('admin_downloads', name=admin) }}"><i class="fa-solid fa-download"></i>
+                        Downloads</a></li>
+                <li><a href="{{ url_for('admin_analytics', name=admin) }}"><i class="fa-solid fa-chart-line"></i>
+                        Analytics</a></li>
+            </ul>
+            <h4>Configuration</h4>
+            <ul class="nav-list">
+                <li><a href="{{ url_for('admin_settings', name=admin) }}"><i class="fa-solid fa-sliders"></i>
+                        Settings</a></li>
+                <li><a href="{{ url_for('admin_server', name=admin) }}" class="active"><i
+                            class="fa-solid fa-server"></i> Server</a></li>
+                <li><a href="{{ url_for('admin_support', name=admin) }}"><i class="fa-solid fa-life-ring"></i>
+                        Support</a></li>
+            </ul>
+        </nav>
+        <div class="user-profile">
+            <h5>Welcome, {{ admin }}</h5>
+            <p>You have full control.</p>
+        </div>
+    </aside>
+
+    <!-- Main Content: The fake console taking up the full screen. -->
+    <main class="main-content">
+        <header class="page-header">
+            <h1>{{ page_title }}</h1>
+            <p>{{ action_message }}</p>
+        </header>
+        <div class="console-container">
+            <div id="console-output" class="console-output">
+                <!-- JavaScript will populate this area with fake log lines -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Enhanced JavaScript to simulate a secure, multi-step process -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const consoleOutput = document.getElementById('console-output');
+            const adminName = '{{ admin }}';
+            const correctPassword = 'TubeSpire123'; // The secret password
+
+            // State variables for the prank
+            let passwordTries = 0;
+            let emailTries = 0;
+
+            // Helper function to add a line to the console
+            function addLogLine(text, className = 'info', delay = 500) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `> ${text}`;
+                        if (className) p.classList.add(className);
+                        consoleOutput.appendChild(p);
+                        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                        resolve();
+                    }, delay);
+                });
+            }
+
+            // Function to show a form in the console
+            function showForm(promptText, buttonText, onSubmit) {
+                const formContainer = document.createElement('div');
+                formContainer.innerHTML = `
+                    <p class="prompt warning">
+                        <span>${promptText}</span>
+                        <span class="cursor"></span>
+                    </p>
+                    <form class="console-form">
+                        <input type="password" autofocus />
+                        <button type="submit">${buttonText}</button>
+                    </form>
+                `;
+                consoleOutput.appendChild(formContainer);
+                const form = formContainer.querySelector('form');
+                const input = formContainer.querySelector('input');
+
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    formContainer.remove();
+                    onSubmit(input.value);
+                });
+                input.focus();
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            }
+
+            // Function to show a button in the console
+            function showButton(text, onClick) {
+                const button = document.createElement('button');
+                button.textContent = text;
+                button.classList.add('console-button');
+                consoleOutput.appendChild(button);
+                button.addEventListener('click', () => {
+                    button.classList.add('disabled');
+                    button.disabled = true;
+                    onClick();
+                });
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            }
+
+            // The main sequence of the prank
+            async function startPrank() {
+                await addLogLine(`Process initiated by admin: '${adminName}'...`);
+                await addLogLine('Establishing secure connection to core service...');
+                await addLogLine('[200 OK] Connection established.', 'success');
+                await addLogLine('Verifying administrative privileges...');
+                await addLogLine('[200 OK] Privileges verified. Root access granted.', 'success');
+                await addLogLine('CRITICAL ACTION: SUDO authentication required to proceed.', 'warning');
+                await addLogLine("Do not close this window or you may lose access permanently.", 'danger');
+                promptForPassword();
+            }
+
+            function promptForPassword() {
+                showForm(`[sudo] password for ${adminName}:`, 'Enter', (password) => {
+                    if (password === correctPassword) {
+                        onSuccess();
+                    } else {
+                        passwordTries++;
+                        if (passwordTries < 3) {
+                            addLogLine(`Sorry, try again. (${3 - passwordTries} attempts remaining)`, 'danger').then(promptForPassword);
+                        } else {
+                            onLockout();
+                        }
+                    }
+                });
+            }
+
+            async function onLockout() {
+                await addLogLine('Authentication failure. Too many incorrect attempts.', 'danger');
+                await addLogLine('SECURITY ALERT: This terminal is now locked.', 'danger');
+                await addLogLine('You may attempt to reset your password via email.', 'warning');
+                showButton('Attempt Email Password Reset', onEmailResetAttempt);
+            }
+
+            async function onEmailResetAttempt() {
+                emailTries++;
+                if (emailTries === 5) {
+                    await addLogLine('Multiple email attempts failed. This is your final option.', 'danger');
+                    await addLogLine('You may attempt a manual override via the secure terminal.', 'warning');
+                    showButton('Initiate Manual Terminal Reset', onTerminalReset);
+                    return;
+                }
+
+                // 1 in 10 chance of success
+                if (Math.random() < 0.1) {
+                    await addLogLine('Generating secure token...', 'info');
+                    await addLogLine('Dispatching email to registered admin address...', 'info');
+                    await addLogLine('[200 OK] Password reset link has been sent.', 'success');
+                    await addLogLine('This terminal remains locked for security reasons.', 'danger');
+                } else {
+                    await addLogLine('Connecting to mail server...', 'info');
+                    await addLogLine('[503 ERROR] Mail server is not responding. Please try again later.', 'danger');
+                    // Re-enable the button after a delay
+                    setTimeout(() => {
+                        consoleOutput.querySelector('.console-button').classList.remove('disabled');
+                        consoleOutput.querySelector('.console-button').disabled = false;
+                    }, 3000);
+                }
+            }
+
+            async function onTerminalReset() {
+                await addLogLine('MANUAL OVERRIDE INITIATED.', 'warning');
+                await addLogLine('Decrypting security credentials...', 'info');
+                await addLogLine('Please re-authenticate to confirm your identity.', 'warning');
+                showForm(`[root] enter new password:`, 'Confirm', (newPassword) => {
+                    if (newPassword === correctPassword) {
+                        onSuccess();
+                    } else {
+                        addLogLine('Mismatch. Manual override failed. This incident will be reported soon!.', 'danger');
+                    }
+                });
+            }
+
+            async function onSuccess() {
+                await addLogLine('Password accepted. Authentication successful.', 'success');
+                await addLogLine('WARNING: Core services are currently under heavy load.', 'warning');
+                await addLogLine('Your task has been queued and will be processed shortly. Do not leave this page. Please wait...', 'info');
+                // Start the endless "working" state
+                setInterval(() => {
+                    addLogLine('...', 'info', 2000);
+                }, 2500);
+            }
+
+            // Start the prank!
+            startPrank();
+        });
+    </script>
+</body>
+
+</html>
