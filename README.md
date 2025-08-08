@@ -17,7 +17,7 @@
 <p align="center">
   <img src="extras/preview_ui.png" alt="TubeSpire UI Preview" width="90%">
 </p>
-
+<br>
 <div align="center">
     <video src="extras/Demo.mp4" controls width="90%" style="border-radius: 8px;">
       Sorry, your browser doesn't support embedded videos. 
